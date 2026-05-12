@@ -68,7 +68,11 @@ def main():
     animal_name = input("Enter the name of an animal: ").lower().strip()
 
     animals_data = get_animal_data(API_KEY, animal_name)
-    animals_text = get_animals_html(animals_data)
+    if not animals_data:
+        animals_text = f"<h2>The animal '{animal_name}' doesn't exist.</h2>"
+    else:
+        animals_text = get_animals_html(animals_data)
+
     template_text = load_file("animals_template.html")
 
     updated_template = template_text.replace(
