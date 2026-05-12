@@ -1,14 +1,16 @@
 import os
 
+from dotenv import load_dotenv
+
 from data_fetcher import get_animal_data
-from website_generator import load_env_file, load_file, write_file
+from website_generator import load_file, write_file, get_animals_html
 
 
 def main():
     """Main function to load, process, and save animal data."""
 
-    load_env_file()
-    API_KEY = os.getenv("API_KEY")
+    load_dotenv()
+    API_KEY = os.getenv('API_KEY')
 
     animal_name = input("Enter the name of an animal: ").lower().strip()
 
