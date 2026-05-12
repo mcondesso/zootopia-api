@@ -65,7 +65,9 @@ def main():
     load_env_file()
     API_KEY = os.getenv("API_KEY")
 
-    animals_data = get_animal_data(API_KEY, "fox")
+    animal_name = input("Enter the name of an animal: ").lower().strip()
+
+    animals_data = get_animal_data(API_KEY, animal_name)
     animals_text = get_animals_html(animals_data)
     template_text = load_file("animals_template.html")
 
