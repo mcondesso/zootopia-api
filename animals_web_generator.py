@@ -1,40 +1,7 @@
-import json
+import os
 
-
-def load_file(file_path):
-    """Loads the content of a file.
-
-    Args:
-        file_path (str): Path to the file to be loaded.
-
-    Returns:
-        str: Content of the file as a string.
-    """
-    with open(file_path, "r", encoding="utf-8") as handle:
-        return handle.read()
-
-
-def write_file(file_path, data):
-    """Writes data to a file.
-
-    Args:
-        file_path (str): Path to the file where data will be written.
-        data (str): Data to be written to the file.
-    """
-    with open(file_path, "w", encoding="utf-8") as handle:
-        handle.write(data)
-
-
-def load_data(file_path):
-    """Loads and parses a JSON file.
-
-    Args:
-        file_path (str): Path to the JSON file to be loaded.
-
-    Returns:
-        dict: Parsed JSON data as a dictionary.
-    """
-    return json.loads(load_file(file_path))
+from api import get_animal_data
+from file_utils import load_env_file, load_file, write_file
 
 
 def get_serialized_animal_data(animal_data):
@@ -94,7 +61,11 @@ def get_animals_html(animals_data):
 
 def main():
     """Main function to load, process, and save animal data."""
-    animals_data = load_data("animals_data.json")
+
+    load_env_file()
+    API_KEY = os.getenv("API_KEY")
+
+    animals_data = get_animal_data(API_KEY, "fox")
     animals_text = get_animals_html(animals_data)
     template_text = load_file("animals_template.html")
 
